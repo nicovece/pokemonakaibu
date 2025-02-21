@@ -1,0 +1,71 @@
+@import url('./modern-normalize.css');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,200;0,300;0,400;0,500;0,700;0,900;1,200;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:root {
+  /* Pokemon brand palette - to be revised */
+  --color-red: hsl(0, 100%, 50%);
+  --color-bostonred: hsl(0, 100%, 40%);
+  --color-ceruleanblue: hsl(233, 57%, 51%);
+  --color-goldenyellow: hsl(52, 100%, 50%);
+  --color-goldfoil: hsl(52, 66%, 42%);
+  --color-text: hsl(0, 0%, 16%);
+  --color-text--light: hsl(240, 6%, 27%);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: 'Fira Sans', serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-background);
+}
+
+header,
+footer {
+  padding: 2em;
+}
+
+main {
+  flex-grow: 2;
+  padding: 4em 2em;
+  /* background-color: var(--color-background-lightest); */
+}
+
+header,
+main > *,
+footer {
+  min-width: 280px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pokelist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pokelist__item {
+  display: grid;
+  grid-template: auto / 1fr 2fr 1fr;
+  gap: 2rem;
+  padding: 2rem 1rem;
+  border-bottom: 1px dashed var(--color-goldfoil);
+}
+.pokelist__name,
+.pokelist__data,
+.pokelist__highlight {
+  margin: 0;
+  font-size: 1.5rem;
+}
+.pokelist__data {
+  color: var(--color-text--light);
+}
+.pokelist__highlight {
+  justify-self: flex-end;
+  color: var(--color-bostonred);
+}
