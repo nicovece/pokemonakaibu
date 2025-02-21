@@ -62,6 +62,12 @@ for (let i = 0; i < pokemonList.length; i++) {
   document.write(
     `<li class="pokelist__item"><h2 class="pokelist__name">${pokemonList[i].name}</h2> <span class="pokelist__data">height: ${pokemonList[i].height}</span>`
   );
+  /* Highlight Pokémon with height > 2 */
+  if (pokemonList[i].height > 2) {
+    document.write(
+      `<strong class="pokelist__highlight">Wow, that's big</strong>`
+    );
+  }
   document.write(`</li>`);
 }
 /* Close pokemon list and main content */
