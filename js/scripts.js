@@ -51,7 +51,7 @@ let pokemonList = [
 ];
 /* Insert header */
 document.write(
-  '<header class="page-header"><h1 class="page-header__item">PokémonĀkaibu</h1></header>'
+  '<header class="page-header"><h1 class="page-header__item">PokémonĀkaibu</h1></header>',
 );
 /* Insert main content */
 document.write('<main><section class="content--main">');
@@ -60,12 +60,12 @@ document.write('<ul class="pokelist">');
 /* Loop through the array and display Pokémon data */
 for (let i = 0; i < pokemonList.length; i++) {
   document.write(
-    `<li class="pokelist__item"><h2 class="pokelist__name">${pokemonList[i].name}</h2> <span class="pokelist__data">height: ${pokemonList[i].height}</span>`
+    `<li class="pokelist__item"><h2 class="pokelist__name">${pokemonList[i].name}</h2> <span class="pokelist__data">height: ${pokemonList[i].height}</span>`,
   );
   /* Highlight Pokémon with height > 2 */
   if (pokemonList[i].height > 2) {
     document.write(
-      `<strong class="pokelist__highlight">Wow, that's big</strong>`
+      `<strong class="pokelist__highlight">Wow, that's big</strong>`,
     );
   }
   document.write(`</li>`);
@@ -74,5 +74,5 @@ for (let i = 0; i < pokemonList.length; i++) {
 document.write('</ul></section></main>');
 /* Insert footer */
 document.write(
-  '<footer class="page-footer"><small>PokémonĀkaibu</small></footer>'
+  '<footer class="page-footer"><small>PokémonĀkaibu</small></footer>',
 );
