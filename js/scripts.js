@@ -56,13 +56,46 @@ let pokemonRepository = (function () {
     return pokemonList;
   }
 
+  const schema = Object.keys(pokemonList[0]);
+
   function add(pokemon) {
+    if (typeof pokemon !== 'object') {
+      return console.log('You can only add objects to this array');
+    }
+    let keys = Object.keys(pokemon);
+    if (keys.length < schema.length) {
+      return console.log('You need to add all the keys');
+    }
+    for (let i = 0; i < schema.length; i++) {
+      if (!keys.includes(schema[i])) {
+        return console.log('You need to add all the correct keys: ' + schema);
+      }
+    }
     pokemonList.push(pokemon);
   }
+  /*
+  I was trying to filter the Pokemon by name, but I couldn't get it to work. It was taking me too much time, so I asked Copilot. I am not submitting this function but leaving it here because I want to study it in the future.
+  */
+  // function findPokemon(pokemonList, name) {
+  //   return pokemonList.filter((pokemon) => {
+  //     let found = false;
+  //     Object.values(pokemon).forEach((value) => {
+  //       if (typeof value === 'string' && value.includes(name)) {
+  //         found = true;
+  //       }
+  //     });
+  //     return found;
+  //   });
+  // }
 
+  const ageAppropriate = pokemonList.filter((activity) =>
+    activity.name.includes('Venusaur')
+  );
+  console.log(ageAppropriate);
   return {
     getAll,
-    add
+    add,
+    findPokemon
   };
 })();
 
@@ -74,6 +107,11 @@ document.write(
 document.write('<main><section class="content--main">');
 /* Insert pokemon list */
 document.write('<ul class="pokelist">');
+let found = pokemonRepository.findPokemon(
+  pokemonRepository.getAll(),
+  'Beedrill'
+);
+console.log(found);
 pokemonRepository.add({
   name: 'Pikachu',
   height: 0.4,
@@ -85,6 +123,12 @@ pokemonRepository.add({
   height: 0.8,
   types: ['electric'],
   weight: 30
+});
+pokemonRepository.add({
+  name: 'Gianni',
+  height: 1,
+  tyspe: ['ground'], // typo to check if adding condition works
+  weight: 29
 });
 pokemonRepository.add({
   name: 'Sandslash',
