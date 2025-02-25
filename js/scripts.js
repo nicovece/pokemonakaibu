@@ -56,8 +56,13 @@ let pokemonRepository = (function () {
     return pokemonList;
   }
 
+  function add(pokemon) {
+    pokemonList.push(pokemon);
+  }
+
   return {
-    getAll
+    getAll,
+    add
   };
 })();
 
@@ -69,6 +74,24 @@ document.write(
 document.write('<main><section class="content--main">');
 /* Insert pokemon list */
 document.write('<ul class="pokelist">');
+pokemonRepository.add({
+  name: 'Pikachu',
+  height: 0.4,
+  types: ['electric'],
+  weight: 6
+});
+pokemonRepository.add({
+  name: 'Raichu',
+  height: 0.8,
+  types: ['electric'],
+  weight: 30
+});
+pokemonRepository.add({
+  name: 'Sandslash',
+  height: 1,
+  types: ['ground'],
+  weight: 29
+});
 /* Loop through the array and display Pokémon data */
 pokemonRepository.getAll().forEach((pokemon) => {
   document.write(
