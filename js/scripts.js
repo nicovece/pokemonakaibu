@@ -94,8 +94,7 @@ let pokemonRepository = (function () {
   console.log(ageAppropriate);
   return {
     getAll,
-    add,
-    findPokemon
+    add
   };
 })();
 
@@ -106,12 +105,6 @@ document.write(
 /* Insert main content */
 document.write('<main><section class="content--main">');
 /* Insert pokemon list */
-document.write('<ul class="pokelist">');
-let found = pokemonRepository.findPokemon(
-  pokemonRepository.getAll(),
-  'Beedrill'
-);
-console.log(found);
 pokemonRepository.add({
   name: 'Pikachu',
   height: 0.4,
