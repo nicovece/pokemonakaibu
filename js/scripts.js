@@ -76,7 +76,11 @@ let pokemonRepository = (function () {
 
   /* Function to show Pokémon details */
   function showDetails(pokemon) {
-    console.log(pokemon);
+    let keys = Object.keys(pokemon);
+    keys.forEach((key) => {
+      console.log(key + ': ' + pokemon[key]);
+    });
+    console.log('-----------------');
   }
 
   /* Function to create a button for each Pokémon */
