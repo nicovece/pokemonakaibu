@@ -98,13 +98,7 @@ let pokemonRepository = (function () {
   };
 })();
 
-/* Insert header */
-document.write(
-  '<header class="page-header"><h1 class="page-header__item">PokémonĀkaibu</h1></header>'
-);
-/* Insert main content */
-document.write('<main><section class="content--main">');
-/* Insert pokemon list */
+/* Insert new pokemon into pokemon list */
 pokemonRepository.add({
   name: 'Pikachu',
   height: 0.4,
@@ -130,22 +124,31 @@ pokemonRepository.add({
   weight: 29
 });
 /* Loop through the array and display Pokémon data */
-document.write('<ul class="pokelist">');
 pokemonRepository.getAll().forEach((pokemon) => {
-  document.write(
-    `<li class="pokelist__item"><h2 class="pokelist__name">${pokemon.name}</h2> <span class="pokelist__data">height: ${pokemon.height}</span>`
-  );
-  /* Highlight Pokémon with height > 2 */
-  if (pokemon.height > 2) {
-    document.write(
-      '<strong class="pokelist__highlight">Wow, that\'s big</strong>'
-    );
-  }
-  document.write('</li>');
+  const pokemonList = document.querySelector('.pokelist');
+  let listItem = document.createElement('li');
+  listItem.classList.add('pokelist__item');
+  let button = document.createElement('button');
+  button.innerText = pokemon.name;
+  button.classList.add('pokelist__button');
+  listItem.appendChild(button);
+  pokemonList.appendChild(listItem);
+
+  // button.addEventListener('click', function () {
+  //   showDetails(pokemon);
+  // });
+  // function showDetails(pokemon) {
+  //   console.log(pokemon);
+  // }
+
+  // document.write(
+  //   `<li class="pokelist__item"><h2 class="pokelist__name">${pokemon.name}</h2> <span class="pokelist__data">height: ${pokemon.height}</span>`
+  // );
+  // /* Highlight Pokémon with height > 2 */
+  // if (pokemon.height > 2) {
+  //   document.write(
+  //     '<strong class="pokelist__highlight">Wow, that\'s big</strong>'
+  //   );
+  // }
+  // document.write('</li>');
 });
-/* Close pokemon list and main content */
-document.write('</ul></section></main>');
-/* Insert footer */
-document.write(
-  '<footer class="page-footer"><small>PokémonĀkaibu</small></footer>'
-);
