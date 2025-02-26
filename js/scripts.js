@@ -130,6 +130,7 @@ pokemonRepository.add({
   weight: 29
 });
 /* Loop through the array and display Pokémon data */
+document.write('<ul class="pokelist">');
 pokemonRepository.getAll().forEach((pokemon) => {
   document.write(
     `<li class="pokelist__item"><h2 class="pokelist__name">${pokemon.name}</h2> <span class="pokelist__data">height: ${pokemon.height}</span>`
