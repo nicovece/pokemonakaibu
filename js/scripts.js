@@ -73,6 +73,16 @@ let pokemonRepository = (function () {
     }
     pokemonList.push(pokemon);
   }
+  function addListItem(pokemon) {
+    let pokemonList = document.querySelector('.pokelist');
+    let listItem = document.createElement('li');
+    listItem.classList.add('pokelist__item');
+    let button = document.createElement('button');
+    button.innerText = pokemon.name;
+    button.classList.add('pokelist__button');
+    listItem.appendChild(button);
+    pokemonList.appendChild(listItem);
+  }
   /*
   I was trying to filter the Pokemon by name, but I couldn't get it to work. It was taking me too much time, so I asked Copilot. I am not submitting this function but leaving it here because I want to study it in the future.
   */
@@ -94,7 +104,8 @@ let pokemonRepository = (function () {
   console.log(ageAppropriate);
   return {
     getAll,
-    add
+    add,
+    addListItem
   };
 })();
 
@@ -125,14 +136,7 @@ pokemonRepository.add({
 });
 /* Loop through the array and display Pokémon data */
 pokemonRepository.getAll().forEach((pokemon) => {
-  const pokemonList = document.querySelector('.pokelist');
-  let listItem = document.createElement('li');
-  listItem.classList.add('pokelist__item');
-  let button = document.createElement('button');
-  button.innerText = pokemon.name;
-  button.classList.add('pokelist__button');
-  listItem.appendChild(button);
-  pokemonList.appendChild(listItem);
+  pokemonRepository.addListItem(pokemon);
 
   // button.addEventListener('click', function () {
   //   showDetails(pokemon);

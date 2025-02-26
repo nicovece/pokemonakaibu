@@ -31,7 +31,7 @@ footer {
 
 main {
   flex-grow: 2;
-  padding: 4em 2em;
+  padding: 1em 1.5em;
   /* background-color: var(--color-background-lightest); */
 }
 
@@ -43,6 +43,10 @@ footer {
   margin: 0 auto;
 }
 
+.page-header__item {
+  margin-bottom: 0;
+}
+
 .pokelist {
   list-style: none;
   padding: 0;
@@ -50,11 +54,12 @@ footer {
 }
 
 .pokelist__item {
-  display: grid;
-  grid-template: auto / 1fr 2fr 1fr;
-  gap: 2rem;
-  padding: 2rem 1rem;
+  padding: 2rem 0;
   border-bottom: 1px dashed var(--color-goldfoil);
+}
+
+.pokelist__item:last-child {
+  border-bottom: none;
 }
 
 .pokelist__name,
@@ -75,13 +80,37 @@ footer {
 
 .pokelist__button {
   display: block;
+  width: 100%;
   padding: 1em;
   border: 1px solid var(--color-ceruleanblue);
   border-radius: 0.5em;
   background-color: #fff;
   color: var(--color-ceruleanblue);
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 500;
   text-align: center;
   text-decoration: none;
+}
+
+footer {
+  width: 100%;
+  text-align: center;
+}
+
+@media (min-width: 600px) {
+  main {
+    padding: 2em;
+  }
+  .pokelist__item {
+    display: grid;
+    grid-template: auto / 1fr 2fr 1fr;
+    gap: 2rem;
+    padding: 2rem 1rem;
+  }
+}
+
+@media (min-width: 1600px) {
+  main {
+    padding: 4em 2em;
+  }
 }
