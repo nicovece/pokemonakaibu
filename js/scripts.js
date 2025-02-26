@@ -78,6 +78,7 @@ let pokemonRepository = (function () {
   function showDetails(pokemon) {
     console.log(pokemon);
   }
+
   /* Function to create a button for each Pokémon */
   function createButton(pokemon) {
     let button = document.createElement('button');
@@ -120,24 +121,28 @@ pokemonRepository.add({
   types: ['electric'],
   weight: 6
 });
+
 pokemonRepository.add({
   name: 'Raichu',
   height: 0.8,
   types: ['electric'],
   weight: 30
 });
+
 pokemonRepository.add({
   name: 'Gianni',
   height: 1,
   tyspe: ['ground'], // typo to check if adding condition works
   weight: 29
 });
+
 pokemonRepository.add({
   name: 'Sandslash',
   height: 1,
   types: ['ground'],
   weight: 29
 });
+
 /* Loop through the array and display Pokémon data */
 pokemonRepository.getAll().forEach((pokemon) => {
   pokemonRepository.addListItem(pokemon);
