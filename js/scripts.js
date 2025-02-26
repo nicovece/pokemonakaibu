@@ -51,13 +51,13 @@ let pokemonRepository = (function () {
       weight: 18
     }
   ];
-
+  /* Function to get all Pokémon */
   function getAll() {
     return pokemonList;
   }
 
+  /* Function to add Pokémon to the array */
   const schema = Object.keys(pokemonList[0]);
-
   function add(pokemon) {
     if (typeof pokemon !== 'object') {
       return console.log('You can only add objects to this array');
@@ -73,39 +73,43 @@ let pokemonRepository = (function () {
     }
     pokemonList.push(pokemon);
   }
+
+  /* Function to show Pokémon details */
+  function showDetails(pokemon) {
+    console.log(pokemon);
+  }
+  /* Function to create a button for each Pokémon */
+  function createButton(pokemon) {
+    let button = document.createElement('button');
+    button.innerText = pokemon.name;
+    button.classList.add('pokelist__button');
+    /* Event listener to show Pokémon details */
+    button.addEventListener('click', function () {
+      showDetails(pokemon);
+    });
+    return button;
+  }
+
+  /* Function to add Pokémon to the list */
   function addListItem(pokemon) {
     let pokemonList = document.querySelector('.pokelist');
     let listItem = document.createElement('li');
     listItem.classList.add('pokelist__item');
-    let button = document.createElement('button');
-    button.innerText = pokemon.name;
-    button.classList.add('pokelist__button');
-    listItem.appendChild(button);
     pokemonList.appendChild(listItem);
+    /* Append button to list item */
+    listItem.appendChild(createButton(pokemon));
   }
-  /*
-  I was trying to filter the Pokemon by name, but I couldn't get it to work. It was taking me too much time, so I asked Copilot. I am not submitting this function but leaving it here because I want to study it in the future.
-  */
-  // function findPokemon(pokemonList, name) {
-  //   return pokemonList.filter((pokemon) => {
-  //     let found = false;
-  //     Object.values(pokemon).forEach((value) => {
-  //       if (typeof value === 'string' && value.includes(name)) {
-  //         found = true;
-  //       }
-  //     });
-  //     return found;
-  //   });
-  // }
 
-  const ageAppropriate = pokemonList.filter((activity) =>
-    activity.name.includes('Venusaur')
+  /* Filter the pokemonList array to find Pokemon by name eg Venusaur */
+  const ageAppropriate = pokemonList.filter((pokemon) =>
+    pokemon.name.includes('Venusaur')
   );
   console.log(ageAppropriate);
   return {
     getAll,
     add,
-    addListItem
+    addListItem,
+    showDetails
   };
 })();
 
@@ -137,13 +141,6 @@ pokemonRepository.add({
 /* Loop through the array and display Pokémon data */
 pokemonRepository.getAll().forEach((pokemon) => {
   pokemonRepository.addListItem(pokemon);
-
-  // button.addEventListener('click', function () {
-  //   showDetails(pokemon);
-  // });
-  // function showDetails(pokemon) {
-  //   console.log(pokemon);
-  // }
 
   // document.write(
   //   `<li class="pokelist__item"><h2 class="pokelist__name">${pokemon.name}</h2> <span class="pokelist__data">height: ${pokemon.height}</span>`
