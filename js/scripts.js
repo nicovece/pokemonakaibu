@@ -1,86 +1,34 @@
 /* pokemonlist IIFE */
 let pokemonRepository = (function () {
-  /* Array of objects with Pokémon data */
-  let pokemonList = [
-    {
-      name: 'Venusaur',
-      height: 2,
-      types: ['grass', 'poison'],
-      weight: 100
-    },
-    {
-      name: 'Dragonite',
-      height: 2.2,
-      types: ['dragon', 'flying'],
-      weight: 210
-    },
-    {
-      name: 'Charizard',
-      height: 1.7,
-      types: ['fire', 'flying'],
-      weight: 90
-    },
-    {
-      name: 'Blastoise',
-      height: 1.6,
-      types: ['water'],
-      weight: 85
-    },
-    {
-      name: 'Butterfree',
-      height: 1.1,
-      types: ['bug', 'flying'],
-      weight: 32
-    },
-    {
-      name: 'Beedrill',
-      height: 1,
-      types: ['bug', 'poison'],
-      weight: 29
-    },
-    {
-      name: 'Pidgeot',
-      height: 1.5,
-      types: ['normal', 'flying'],
-      weight: 39
-    },
-    {
-      name: 'Raticate',
-      height: 0.7,
-      types: ['normal'],
-      weight: 18
-    }
-  ];
+  /* Array to store Pokémon */
+  let pokemonList = [];
+
+  /* API URL */
+  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
+
   /* Function to get all Pokémon */
   function getAll() {
     return pokemonList;
   }
 
   /* Function to add Pokémon to the array */
-  const schema = Object.keys(pokemonList[0]);
   function add(pokemon) {
-    if (typeof pokemon !== 'object') {
-      return console.log('You can only add objects to this array');
+    if (
+      typeof pokemon === 'object' &&
+      'name' in pokemon &&
+      'detailsUrl' in pokemon
+    ) {
+      pokemonList.push(pokemon);
+    } else {
+      console.log('pokemon is not correct');
     }
-    let keys = Object.keys(pokemon);
-    if (keys.length < schema.length) {
-      return console.log('You need to add all the keys');
-    }
-    for (let i = 0; i < schema.length; i++) {
-      if (!keys.includes(schema[i])) {
-        return console.log('You need to add all the correct keys: ' + schema);
-      }
-    }
-    pokemonList.push(pokemon);
   }
 
   /* Function to show Pokémon details */
   function showDetails(pokemon) {
-    let keys = Object.keys(pokemon);
-    keys.forEach((key) => {
-      console.log(key + ': ' + pokemon[key]);
+    loadDetails(pokemon).then(function () {
+      console.log(pokemon);
     });
-    console.log('-----------------');
   }
 
   /* Function to create a button for each Pokémon */
@@ -105,60 +53,58 @@ let pokemonRepository = (function () {
     listItem.appendChild(createButton(pokemon));
   }
 
-  /* Filter the pokemonList array to find Pokemon by name eg Venusaur */
-  const ageAppropriate = pokemonList.filter((pokemon) =>
-    pokemon.name.includes('Venusaur')
-  );
-  console.log(ageAppropriate);
+  /* Function that loads a list of pokemon */
+  function loadList() {
+    return fetch(apiUrl)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (json) {
+        json.results.forEach(function (item) {
+          let pokemon = {
+            name: item.name,
+            detailsUrl: item.url
+          };
+          add(pokemon);
+          console.log(pokemon);
+        });
+      })
+      .catch(function (e) {
+        console.error(e);
+      });
+  }
+
+  /* Function that loads item details */
+  function loadDetails(item) {
+    let url = item.detailsUrl;
+    return fetch(url)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (details) {
+        /* Adding details to the list item  */
+        item.imageUrl = details.sprites.front_default;
+        item.height = details.height;
+        item.types = details.types;
+      })
+      .catch(function (e) {
+        console.error(e);
+      });
+  }
+
   return {
-    getAll,
     add,
+    getAll,
     addListItem,
-    showDetails
+    showDetails,
+    loadList: loadList,
+    loadDetails: loadDetails
   };
 })();
 
-/* Insert new pokemon into pokemon list */
-pokemonRepository.add({
-  name: 'Pikachu',
-  height: 0.4,
-  types: ['electric'],
-  weight: 6
-});
-
-pokemonRepository.add({
-  name: 'Raichu',
-  height: 0.8,
-  types: ['electric'],
-  weight: 30
-});
-
-pokemonRepository.add({
-  name: 'Gianni',
-  height: 1,
-  tyspe: ['ground'], // typo to check if adding condition works
-  weight: 29
-});
-
-pokemonRepository.add({
-  name: 'Sandslash',
-  height: 1,
-  types: ['ground'],
-  weight: 29
-});
-
-/* Loop through the array and display Pokémon data */
-pokemonRepository.getAll().forEach((pokemon) => {
-  pokemonRepository.addListItem(pokemon);
-
-  // document.write(
-  //   `<li class="pokelist__item"><h2 class="pokelist__name">${pokemon.name}</h2> <span class="pokelist__data">height: ${pokemon.height}</span>`
-  // );
-  // /* Highlight Pokémon with height > 2 */
-  // if (pokemon.height > 2) {
-  //   document.write(
-  //     '<strong class="pokelist__highlight">Wow, that\'s big</strong>'
-  //   );
-  // }
-  // document.write('</li>');
+pokemonRepository.loadList().then(function () {
+  /* Loop to add Pokémon to the list */
+  pokemonRepository.getAll().forEach(function (pokemon) {
+    pokemonRepository.addListItem(pokemon);
+  });
 });
