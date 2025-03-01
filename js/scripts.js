@@ -55,8 +55,10 @@ let pokemonRepository = (function () {
 
   /* Function that loads a list of pokemon */
   function loadList() {
+    showLoadingMessage();
     return fetch(apiUrl)
       .then(function (response) {
+        hideLoadingMessage();
         return response.json();
       })
       .then(function (json) {
@@ -76,9 +78,11 @@ let pokemonRepository = (function () {
 
   /* Function that loads item details */
   function loadDetails(item) {
+    showLoadingMessage();
     let url = item.detailsUrl;
     return fetch(url)
       .then(function (response) {
+        hideLoadingMessage();
         return response.json();
       })
       .then(function (details) {
@@ -87,10 +91,33 @@ let pokemonRepository = (function () {
         item.height = details.height;
         item.weight = details.weight;
         item.types = details.types;
+        hideLoadingMessage();
       })
       .catch(function (e) {
+        hideLoadingMessage();
         console.error(e);
       });
+  }
+
+  (function () {
+    let messageBox = document.createElement('div');
+    messageBox.classList.add('pokelist__message');
+    document.body.appendChild(messageBox);
+    let message = document.createElement('h4');
+    message.innerHTML = '<span>Loading Pokémon List</span>';
+    messageBox.appendChild(message);
+  })();
+
+  function showLoadingMessage() {
+    let messageBox = document.querySelector('.pokelist__message');
+    messageBox.classList.add('pokelist__message--loading');
+    document.body.classList.add('is-loading');
+  }
+
+  function hideLoadingMessage() {
+    let messageBox = document.querySelector('.pokelist__message');
+    messageBox.classList.remove('pokelist__message--loading');
+    document.body.classList.remove('is-loading');
   }
 
   return {
