@@ -4,7 +4,7 @@ let pokemonRepository = (function () {
   let pokemonList = [];
 
   /* API URL */
-  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
+  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=2000';
 
   /* Function to get all Pokémon */
   function getAll() {
@@ -66,7 +66,7 @@ let pokemonRepository = (function () {
             detailsUrl: item.url
           };
           add(pokemon);
-          console.log(pokemon);
+          // console.log(pokemon);
         });
       })
       .catch(function (e) {
@@ -85,6 +85,7 @@ let pokemonRepository = (function () {
         /* Adding details to the list item  */
         item.imageUrl = details.sprites.front_default;
         item.height = details.height;
+        item.weight = details.weight;
         item.types = details.types;
       })
       .catch(function (e) {
@@ -93,10 +94,10 @@ let pokemonRepository = (function () {
   }
 
   return {
-    add,
-    getAll,
-    addListItem,
-    showDetails,
+    add: add,
+    getAll: getAll,
+    addListItem: addListItem,
+    showDetails: showDetails,
     loadList: loadList,
     loadDetails: loadDetails
   };
