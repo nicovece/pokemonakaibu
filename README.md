@@ -22,13 +22,14 @@ cd pokemonakaibu
 
 ## Usage
 
-Open the `index.html` file in your browser to view the application. Use the search bar to find specific Pokémon by name or ID. Click on a Pokémon to view detailed information.
+Open the `index.html` file in your browser to view the application. Click on a Pokémon to view detailed information.
+To be implemented in the future: Use the search bar to find specific Pokémon by name or ID.
 
 ## Features
 
-- Search for Pokémon by name or ID
 - View detailed information about each Pokémon, including stats, abilities, and types
 - Responsive design for mobile and desktop
+- Search for Pokémon by name or ID (To be implemented in the future)
 
 ## Project Structure
 
