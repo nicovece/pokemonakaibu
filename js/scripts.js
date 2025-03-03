@@ -28,6 +28,7 @@ let pokemonRepository = (function () {
   function showDetails(pokemon) {
     loadDetails(pokemon).then(function () {
       console.log(pokemon);
+      showModal(pokemon);
     });
   }
 
@@ -87,10 +88,13 @@ let pokemonRepository = (function () {
       })
       .then(function (details) {
         /* Adding details to the list item  */
-        item.imageUrl = details.sprites.front_default;
+        item.imageUrl = details.sprites.other['official-artwork'].front_default;
         item.height = details.height;
         item.weight = details.weight;
         item.types = details.types;
+        item.abilities = details.abilities;
+        item.types = details.types;
+        item.id = details.id;
         hideLoadingMessage();
       })
       .catch(function (e) {
@@ -120,13 +124,129 @@ let pokemonRepository = (function () {
     document.body.classList.remove('is-loading');
   }
 
+  /* Modal */
+
+  let modalContainer = document.querySelector('#pokemodal__container');
+
+  function showModal(pokemon) {
+    modalContainer.innerHTML = '';
+    /* Create the modal itself */
+    let modal = document.createElement('div');
+    modal.classList.add('pokemodal');
+    modalContainer.appendChild(modal);
+
+    /* Create and insert modal elements */
+    /* Pokemon name */
+    let titleElement = document.createElement('h1');
+    titleElement.classList.add('pokemodal__name');
+    titleElement.innerHTML =
+      '<span class="pokemodal__id">' + pokemon.id + '</span> ' + pokemon.name;
+    modal.appendChild(titleElement);
+    console.log(pokemon);
+    /* Pokemon name */
+    let image = document.createElement('img');
+    image.classList.add('pokemodal__image');
+    image.src = pokemon.imageUrl;
+    modal.appendChild(image);
+
+    /* Close button */
+    let closeButtonElement = document.createElement('button');
+    closeButtonElement.classList.add('pokemodal__close');
+    closeButtonElement.innerHTML = '<span class="sr-only">Close</span>';
+    closeButtonElement.addEventListener('click', hideModal);
+    modal.appendChild(closeButtonElement);
+
+    /* Pokemon databox */
+    let pokemonData = document.createElement('div');
+    pokemonData.classList.add('pokemodal__data');
+    modal.appendChild(pokemonData);
+
+    /* Pokemon profile data */
+    let profileTitle = document.createElement('h2');
+    profileTitle.innerText = 'Profile';
+    pokemonData.appendChild(profileTitle);
+
+    let profileList = document.createElement('ul');
+    profileList.classList.add('pokemodal__profile');
+    pokemonData.appendChild(profileList);
+
+    let profileHeight = document.createElement('li');
+    profileHeight.innerText = 'Height: ' + pokemon.height;
+    profileList.appendChild(profileHeight);
+
+    let profileWeight = document.createElement('li');
+    profileWeight.innerText = 'Weight: ' + pokemon.weight;
+    profileList.appendChild(profileWeight);
+
+    /* Pokemon abilities data */
+    let typesTitle = document.createElement('h2');
+    typesTitle.innerText = 'Types';
+    pokemonData.appendChild(typesTitle);
+
+    let typesList = document.createElement('ul');
+    typesList.classList.add('pokemodal__types');
+    pokemonData.appendChild(typesList);
+    pokemon.types.forEach((type) => {
+      let typesItem = document.createElement('li');
+      typesItem.innerText = type.type.name;
+      typesList.appendChild(typesItem);
+    });
+
+    /* Pokemon abilities data */
+    let abilitiesTitle = document.createElement('h2');
+    abilitiesTitle.innerText = 'Abilities';
+    pokemonData.appendChild(abilitiesTitle);
+
+    let abilitiesList = document.createElement('ul');
+    abilitiesList.classList.add('pokemodal__abilities');
+    pokemonData.appendChild(abilitiesList);
+    pokemon.abilities.forEach((ability) => {
+      let abilityItem = document.createElement('li');
+      abilityItem.innerText = ability.ability.name;
+      abilitiesList.appendChild(abilityItem);
+    });
+
+    // show modal
+    modalContainer.classList.add('pokemodal__container--visible');
+    document.body.classList.add('is-modal-open');
+
+    // close modal when clicking on overlay
+    modalContainer.addEventListener('click', (e) => {
+      // check if the target is the modal itself
+      let target = e.target;
+      if (target === modalContainer) {
+        hideModal();
+      }
+    });
+  }
+
+  function hideModal() {
+    //let modalContainer = document.querySelector('#modal-container');
+    modalContainer.classList.remove('pokemodal__container--visible');
+    document.body.classList.remove('is-modal-open');
+    // if (dialogPromiseReject) {
+    //   dialogPromiseReject();
+    //   dialogPromiseReject = null;
+    // }
+  }
+
+  /* Event listener to hide modal when pressing ESC */
+  window.addEventListener('keydown', (e) => {
+    if (
+      e.key === 'Escape' &&
+      modalContainer.classList.contains('pokemodal__container--visible')
+    ) {
+      hideModal();
+    }
+  });
+
   return {
-    add: add,
-    getAll: getAll,
-    addListItem: addListItem,
-    showDetails: showDetails,
-    loadList: loadList,
-    loadDetails: loadDetails
+    add,
+    getAll,
+    addListItem,
+    showDetails,
+    loadList,
+    loadDetails
   };
 })();
 
