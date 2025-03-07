@@ -12,9 +12,9 @@
 }
 
 body {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100vh; */
   font-family: "Fira Sans", serif;
   font-weight: 400;
   font-size: 16px;
@@ -28,50 +28,21 @@ body.is-modal-open {
   overflow: hidden;
 }
 
-header,
-footer {
-  padding: 2em;
-}
-
-main {
-  flex-grow: 2;
-  padding: 1em 1.5em;
-  /* background-color: var(--color-background-lightest); */
-}
-
-header,
-main > *,
-footer {
-  min-width: 280px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
 a,
 button {
   /* Removes highlight */
   -webkit-tap-highlight-color: transparent;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
+.pokenavbar {
+  background-color: var(--color-ceruleanblue);
 }
 
-.page-header__item {
-  margin-bottom: 0;
-}
-
-.pokelist {
+/* .pokelist {
   list-style: none;
   padding: 0;
   margin: 0;
-}
-
-.pokelist__item {
-  padding: 1rem 0;
-  /* border-bottom: 1px dashed var(--color-goldfoil); */
-}
+} */
 
 .pokelist__item:last-child {
   border-bottom: none;
@@ -289,14 +260,11 @@ h2:has(+ .pokemodal__abilities) {
   main {
     padding: 2em;
   }
-  .pokelist__item {
-    /* display: grid;
-    grid-template: auto / 1fr 2fr 1fr;
-    gap: 2rem; */
+  /* .pokelist__item {
     display: inline-block;
     width: 25%;
     padding: 1rem;
-  }
+  } */
   .pokelist__message--loading h4 {
     flex-direction: row;
     font-size: 2rem;
