@@ -4,7 +4,7 @@ let pokemonRepository = (function () {
   let pokemonList = [];
 
   /* API URL */
-  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=2000';
+  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=15';
 
   /* Function to get all Pokémon */
   function getAll() {
@@ -34,8 +34,38 @@ let pokemonRepository = (function () {
   /* Function to create a button for each Pokémon */
   function createButton(pokemon) {
     let button = document.createElement('button');
-    button.innerText = pokemon.name;
-    button.classList.add('pokelist__button');
+    /* get pokemon id by its url and use it to get the image */
+    var urlparts = pokemon.detailsUrl.split('/');
+    let pokemonId = urlparts[urlparts.length - 2];
+    // console.log(pokemon);
+
+    /* Get pokemon image */
+    let buttonImage =
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' +
+      pokemonId +
+      '.png';
+    fetch(buttonImage)
+      .then(function (response) {
+        if (!response.ok) {
+          // make the promise be rejected if we didn't get a 2xx response
+          console.log(response + ' error ' + pokemonId);
+          throw new Error('Not 2xx response ', { cause: response });
+        } else {
+          button.style.backgroundImage = `url(${buttonImage})`;
+        }
+      })
+      .catch(function (error) {
+        console.log(pokemonId + ' err ' + error);
+      });
+
+    button.innerHTML =
+      '<span class="pokelist_name">' + pokemon.name + '</span>';
+    button.classList.add(
+      'btn',
+      'btn-outline-primary',
+      'btn-lg',
+      'pokelist__button'
+    );
     /* Event listener to show Pokémon details */
     button.addEventListener('click', function () {
       showDetails(pokemon);
@@ -50,11 +80,15 @@ let pokemonRepository = (function () {
     listItem.classList.add(
       'list-group-item',
       'pokelist__item',
-      'col-12',
+      'col-6',
       'col-md-4',
+      'col-lg-3',
+      'col-xl-2',
       'border-0',
       'p-3',
-      'm-0'
+      'm-0',
+      'd-grid',
+      'bg-transparent'
     );
     pokemonList.appendChild(listItem);
     /* Append button to list item */
