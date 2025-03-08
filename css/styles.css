@@ -5,6 +5,7 @@
   --color-red: hsl(0, 100%, 50%);
   --color-bostonred: hsl(0, 100%, 40%);
   --color-ceruleanblue: hsl(233, 57%, 51%);
+  --color-ceruleanblue--lightestbg: rgba(59, 75, 201, 0.1);
   --color-goldenyellow: hsl(52, 100%, 50%);
   --color-goldfoil: hsl(52, 66%, 42%);
   --color-text: hsl(0, 0%, 16%);
@@ -88,7 +89,7 @@ button {
 } */
 
 main {
-  background-color: rgba(59, 75, 201, 0.1);
+  background-color: var(--color-ceruleanblue--lightestbg);
 }
 
 .pokelist__name,
@@ -115,8 +116,6 @@ main {
   font-weight: 500;
   background-size: 0;
   background-repeat: no-repeat;
-  /* background-color: rgba(255, 221, 0, 0.25); */
-  /* background-color: rgba(178, 159, 36, 0.25); */
   background-color: #fff;
   border-width: 1px;
   border-color: var(--color-ceruleanblue);
@@ -228,20 +227,8 @@ main {
     background-color: rgba(59, 75, 201, 0.75);
   }
 }
-/* Modal */
-#pokemodal__container {
-  display: none;
-  position: fixed;
-  inset: 0;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(59, 75, 201, 1);
-  z-index: 1000;
-}
-#pokemodal__container.pokemodal__container--visible {
-  display: flex;
-}
-.pokemodal {
+
+.pokemodal__body {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -251,28 +238,31 @@ main {
   max-height: 80vh;
   overflow: auto;
   padding: 1rem 1.5rem 2rem 1.5rem;
-  border-radius: 0.5rem;
-  background-color: #fff;
-  border: 2px solid var(--color-ceruleanblue);
+  background-color: var(--color-ceruleanblue--lightestbg);
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
   color: var(--color-text);
   font-size: 1.125rem;
 }
-.pokemodal__close {
+
+.pokemodal__close,
+.modal-header .btn-close.pokemodal__close {
   display: flex;
   align-content: center;
   align-items: center;
   justify-content: center;
-  width: 3rem;
+  align-self: center;
+  /* width: 3rem;
   height: 3rem;
   order: -2;
   align-self: end;
   position: sticky;
-  top: 0;
+  top: 0; */
   padding: 1.25rem;
+  margin-right: 0.5rem;
   font-size: 1.125rem;
   font-weight: 700;
   color: var(--color-bostonred);
+  background: none;
   background-color: #fff;
   border: solid currentColor;
   border-width: 2px;
@@ -282,17 +272,20 @@ main {
   transition: all 250ms ease-in-out;
 }
 
-.pokemodal__close::before {
+.pokemodal__close::before,
+.modal-header .btn-close.pokemodal__close::before {
   content: "×";
   margin-bottom: 2px;
   font-size: 2em;
 }
 
 @media (hover: hover) {
-  .pokemodal__close {
+  .pokemodal__close,
+  .modal-header .btn-close.pokemodal__close {
     opacity: 0.75;
   }
-  .pokemodal__close:hover {
+  .pokemodal__close:hover,
+  .modal-header .btn-close.pokemodal__close:hover {
     background-color: var(--color-bostonred);
     color: #fff;
     border-color: var(--color-bostonred);
@@ -322,10 +315,69 @@ main {
   content: " / ";
 }
 
-.pokemodal__image {
+.pokemodal__image__wrapper {
+  display: grid;
+  grid-template: 1fr / 1fr;
+  justify-items: center;
+  align-items: center;
+  padding: 0;
+  background-color: #fff;
+  border-width: 1px;
+  border-color: var(--color-ceruleanblue);
+  color: var(--color-ceruleanblue);
+  box-shadow:
+    0 1px 3px rgba(59, 75, 201, 0.12),
+    0 1px 2px rgba(59, 75, 201, 0.24);
+  overflow: hidden;
+  transition: all 250ms;
+}
+
+.pokemodal__image__wrapper::before {
+  display: inline-block;
+  grid-column: 1;
+  grid-row: 1;
+  content: "";
   width: 100%;
-  order: -1;
+  padding-top: 100%;
+  background-color: rgba(255, 255, 255, 0.75);
+  background-image: inherit;
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: center top;
+  transform: scale(1);
+  transition: all 500ms;
+  z-index: 1;
+}
+
+.pokemodal__image__wrapper::after {
+  display: inline-block;
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  padding-top: 100%;
+  content: "";
+  background: radial-gradient(
+    circle at 50% 50%,
+    #ffffff,
+    #fff7e1,
+    #fff0c4,
+    #ffe8a6,
+    #ffe188,
+    #ffd968,
+    #ffd245,
+    #ffcb05
+  );
+  z-index: 0;
+  transform: scale(1);
+  transition: all 500ms;
+}
+
+.pokemodal__image {
+  grid-column: 1;
+  grid-row: 1;
+  width: 70%;
   object-fit: cover;
+  z-index: 2;
 }
 
 .pokemodal__data {
@@ -397,9 +449,10 @@ h2:has(+ .pokemodal__abilities) {
     flex-direction: row;
     font-size: 2rem;
   }
-  .pokemodal {
+  .pokemodal__body {
     display: grid;
-    grid-template: 40% 60% / 30% auto 3rem;
+    grid-template: 1fr / 30% auto;
+    align-items: center;
     gap: 1.5rem;
     position: relative;
     width: 100%;
@@ -416,15 +469,15 @@ h2:has(+ .pokemodal__abilities) {
     align-self: stretch;
     order: unset;
   }
-  .pokemodal__image {
+  .pokemodal__image__wrapper {
     grid-column: 1;
-    grid-row: 1 / span 2;
+    grid-row: 1;
     justify-self: center;
     align-self: center;
   }
   .pokemodal__data {
-    grid-column: 2 / span 2;
-    grid-row: 2;
+    grid-column: 2;
+    grid-row: 1;
     display: grid;
     grid-template: 2rem auto / 1fr 1fr 1fr;
     gap: 1rem;
@@ -440,8 +493,8 @@ h2:has(+ .pokemodal__abilities) {
 }
 
 @media (min-width: 1000px) {
-  .pokemodal {
-    grid-template: 40% 60% / 36% auto 3rem;
+  .pokemodal__body {
+    grid-template: 1fr / 36% auto;
     gap: 2rem 3rem;
     padding: 2rem 3rem;
   }
@@ -449,8 +502,7 @@ h2:has(+ .pokemodal__abilities) {
     align-self: flex-end;
     font-size: 2.5rem;
   }
-  .pokemodal__image {
-    padding: 4rem;
+  .pokemodal__image__wrapper {
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 1);
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
