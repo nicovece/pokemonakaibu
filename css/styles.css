@@ -78,16 +78,6 @@ button {
   color: var(--color-text--light);
 }
 
-/* .pokelist {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-} */
-
-/* .pokelist__item:last-child {
-  border-bottom: none;
-} */
-
 main {
   padding: 2em 1em;
   background-color: var(--color-ceruleanblue--lightestbg);
@@ -97,7 +87,7 @@ main {
 .pokelist__data,
 .pokelist__highlight {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 
 .pokelist__data {
@@ -168,7 +158,7 @@ main {
   transition: all 500ms;
 }
 
-.pokelist__button .pokelist_name {
+.pokelist__button .pokelist__name {
   width: 100%;
   grid-column: 1;
   grid-row: 2;
@@ -204,7 +194,7 @@ main {
   background-color: rgba(255, 255, 255, 0);
   transform: scale(1.1);
 }
-.pokelist__button:active .pokelist_name {
+.pokelist__button:active .pokelist__name {
   background-color: rgba(59, 75, 201, 0.75);
 }
 
@@ -224,7 +214,7 @@ main {
     background-color: rgba(255, 255, 255, 0);
     transform: scale(1.1);
   }
-  .pokelist__button:hover .pokelist_name {
+  .pokelist__button:hover .pokelist__name {
     background-color: rgba(59, 75, 201, 0.75);
   }
 }
@@ -284,8 +274,9 @@ main {
   }
 }
 .pokemodal__name {
-  grid-column: 2 / span 2;
-  grid-row: 1;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 0.3em;
   margin: 0;
   font-size: 2rem;
   font-weight: 700;

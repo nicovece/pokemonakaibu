@@ -58,8 +58,11 @@ let pokemonRepository = (function () {
         console.log(pokemonId + ' err ' + error);
       });
 
-    button.innerHTML =
-      '<span class="pokelist_name">' + pokemon.name + '</span>';
+    /* Pokémon name */
+    let pokelistName = document.createElement('span');
+    pokelistName.innerText = pokemon.name;
+    pokelistName.classList.add('pokelist__name');
+    button.appendChild(pokelistName);
     button.classList.add(
       'btn',
       'btn-outline-primary',
@@ -153,8 +156,10 @@ let pokemonRepository = (function () {
     messageBox.classList.add('pokelist__message');
     document.body.appendChild(messageBox);
     let message = document.createElement('h4');
-    message.innerHTML = '<span>Loading Pokémon List</span>';
     messageBox.appendChild(message);
+    let messageSpan = document.createElement('span');
+    messageSpan.innerText = 'Loading Pokémon List';
+    message.appendChild(messageSpan);
   })();
 
   function showLoadingMessage() {
@@ -180,10 +185,17 @@ let pokemonRepository = (function () {
     modalBody.innerText = '';
 
     /* Modal content */
-    /* Pokémon name */
+    /* Pokémon name as modal title */
     modalTitle.classList.add('pokemodal__name');
-    modalTitle.innerHTML =
-      '<span class="pokemodal__id">' + pokemon.id + '</span> ' + pokemon.name;
+    modalTitle.innerText = pokemon.name;
+
+    /* Pokémon id in the modal title */
+    let pokemonId = document.createElement('span');
+    pokemonId.classList.add('pokemodal__id');
+    pokemonId.innerText = pokemon.id;
+    modalTitle.appendChild(pokemonId);
+    // modalTitle.innerHTML =
+    //   '<span class="pokemodal__id">' + pokemon.id + '</span> ' + pokemon.name;
 
     /* Pokemon image */
     let imageWrapper = document.createElement('div');
