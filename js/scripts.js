@@ -4,7 +4,7 @@ let pokemonRepository = (function () {
   let pokemonList = [];
 
   /* API URL */
-  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
+  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=15';
 
   /* Function to get all Pokémon */
   function getAll() {
@@ -176,9 +176,8 @@ let pokemonRepository = (function () {
 
   /* Modal */
 
-  let modalContainer = document.querySelector('#pokemodal__container');
-
   function showModal(pokemon) {
+    let modalContainer = document.querySelector('#pokemodal__container');
     let modalBody = modalContainer.querySelector('.modal-body');
     let modalTitle = modalContainer.querySelector('.modal-title');
     modalTitle.innerText = '';
