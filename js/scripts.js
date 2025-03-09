@@ -4,7 +4,7 @@ let pokemonRepository = (function () {
   let pokemonList = [];
 
   /* API URL */
-  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=4';
+  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
   /* Function to get all Pokémon */
   function getAll() {
