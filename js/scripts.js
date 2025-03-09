@@ -4,7 +4,7 @@ let pokemonRepository = (function () {
   let pokemonList = [];
 
   /* API URL */
-  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=4';
+  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
   /* Function to get all Pokémon */
   function getAll() {
@@ -244,16 +244,6 @@ let pokemonRepository = (function () {
       abilitiesList.appendChild(abilityItem);
     });
   }
-
-  /* Event listener to hide modal when pressing ESC */
-  window.addEventListener('keydown', (e) => {
-    if (
-      e.key === 'Escape' &&
-      modalContainer.classList.contains('pokemodal__container--visible')
-    ) {
-      hideModal();
-    }
-  });
 
   return {
     add,
