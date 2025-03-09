@@ -245,16 +245,6 @@ let pokemonRepository = (function () {
     });
   }
 
-  /* Event listener to hide modal when pressing ESC */
-  window.addEventListener('keydown', (e) => {
-    if (
-      e.key === 'Escape' &&
-      modalContainer.classList.contains('pokemodal__container--visible')
-    ) {
-      hideModal();
-    }
-  });
-
   return {
     add,
     getAll,

@@ -16,7 +16,7 @@
 
 <body>
   <header class="page-header">
-    <nav class="navbar fixed-top navbar-expand-lg pokenavbar" data-bs-theme="dark" aria-label="Website main navigation">
+    <nav class="navbar fixed-top navbar-expand-sm pokenavbar" data-bs-theme="dark" aria-label="Website main navigation">
       <div class="container">
         <a class="navbar-brand col-lg-3 me-0 pokebrand" href="#">PokémonĀkaibu</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample11"
@@ -64,16 +64,11 @@
       </div> -->
     </section>
   </main>
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pokemodal__container">
-    Launch demo modal
-  </button>
-
 
   <!-- Modal -->
   <div class="modal modal-xl fade" id="pokemodal__container" tabindex="-1" aria-labelledby="pokemodal__containerLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title" id="pokemodal__containerLabel">Modal title</h1>
@@ -99,11 +94,20 @@
           </a>
 
           <ul class="nav col-md-4 justify-content-end">
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </li>
           </ul>
         </footer>
       </div>
