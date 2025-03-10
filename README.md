@@ -25,6 +25,8 @@ cd pokemonakaibu
 Open the `index.html` file in your browser to view the application. Click on a Pokémon to view detailed information.
 To be implemented in the future: Use the search bar to find specific Pokémon by name or ID.
 
+Alternatively, you can use a local server to run the project. If you have the Live Server extension in Visual Studio Code, you can start the server by right-clicking on `index.html` and selecting "Open with Live Server".
+
 ## Features
 
 - View detailed information about each Pokémon, including stats, abilities, and types
