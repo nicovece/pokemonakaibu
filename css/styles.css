@@ -168,7 +168,7 @@ main {
   transition: all 500ms;
 }
 
-.pokelist__button .pokelist_name {
+.pokelist__button .pokelist__name {
   width: 100%;
   grid-column: 1;
   grid-row: 2;
@@ -204,8 +204,8 @@ main {
   background-color: rgba(255, 255, 255, 0);
   transform: scale(1.1);
 }
-.pokelist__button:active .pokelist_name {
-  background-color: rgba(59, 75, 201, 0.75);
+.pokelist__button:active .pokelist__name {
+  background-color: rgba(59, 75, 201, 1);
 }
 
 @media (hover: hover) {
@@ -224,8 +224,8 @@ main {
     background-color: rgba(255, 255, 255, 0);
     transform: scale(1.1);
   }
-  .pokelist__button:hover .pokelist_name {
-    background-color: rgba(59, 75, 201, 0.75);
+  .pokelist__button:hover .pokelist__name {
+    background-color: rgba(59, 75, 201, 1);
   }
 }
 
