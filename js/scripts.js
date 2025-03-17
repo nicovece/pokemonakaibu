@@ -2,9 +2,8 @@
 let pokemonRepository = (function () {
   /* Array to store Pokémon */
   let pokemonList = [];
-
-  /* API URL */
-  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
+  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/';
+  let limit = 18; // Reduced limit for better infinite scroll experience
 
   /* Function to get all Pokémon */
   function getAll() {
@@ -37,7 +36,6 @@ let pokemonRepository = (function () {
     /* get pokemon id by its url and use it to get the image */
     var urlparts = pokemon.detailsUrl.split('/');
     let pokemonId = urlparts[urlparts.length - 2];
-    // console.log(pokemon);
 
     /* Get pokemon image */
     let buttonImage =
@@ -47,7 +45,6 @@ let pokemonRepository = (function () {
     fetch(buttonImage)
       .then(function (response) {
         if (!response.ok) {
-          // make the promise be rejected if we didn't get a 2xx response
           console.log(response + ' error ' + pokemonId);
           throw new Error('Not 2xx response ', { cause: response });
         } else {
@@ -60,7 +57,7 @@ let pokemonRepository = (function () {
 
     /* Pokémon name */
     let pokelistName = document.createElement('span');
-    pokelistName.innerText = pokemon.name;
+    pokelistName.innerText = pokemon.name + ' ' + pokemonId;
     pokelistName.classList.add('pokelist__name');
     button.appendChild(pokelistName);
     button.classList.add(
@@ -73,6 +70,7 @@ let pokemonRepository = (function () {
     button.setAttribute('type', 'button');
     button.setAttribute('data-bs-toggle', 'modal');
     button.setAttribute('data-bs-target', '#pokemodal__container');
+    button.setAttribute('data-pokemon-id', pokemonId);
     /* Event listener to show Pokémon details */
     button.addEventListener('click', function () {
       showDetails(pokemon);
@@ -103,9 +101,10 @@ let pokemonRepository = (function () {
   }
 
   /* Function that loads a list of pokemon */
-  function loadList() {
+  function loadList(offset = 0) {
     showLoadingMessage();
-    return fetch(apiUrl)
+    let adjustedLimit = Math.min(limit, maxPokemons - offset);
+    return fetch(`${apiUrl}?limit=${adjustedLimit}&offset=${offset}`)
       .then(function (response) {
         hideLoadingMessage();
         return response.json();
@@ -117,7 +116,6 @@ let pokemonRepository = (function () {
             detailsUrl: item.url
           };
           add(pokemon);
-          // console.log(pokemon);
         });
       })
       .catch(function (e) {
@@ -141,7 +139,6 @@ let pokemonRepository = (function () {
         item.weight = details.weight;
         item.types = details.types;
         item.abilities = details.abilities;
-        item.types = details.types;
         item.id = details.id;
         hideLoadingMessage();
       })
@@ -193,8 +190,6 @@ let pokemonRepository = (function () {
     pokemonId.classList.add('pokemodal__id');
     pokemonId.innerText = pokemon.id;
     modalTitle.appendChild(pokemonId);
-    // modalTitle.innerHTML =
-    //   '<span class="pokemodal__id">' + pokemon.id + '</span> ' + pokemon.name;
 
     /* Pokemon image */
     let imageWrapper = document.createElement('div');
@@ -266,9 +261,38 @@ let pokemonRepository = (function () {
   };
 })();
 
-pokemonRepository.loadList().then(function () {
+let offset = 0;
+let maxPokemons = 150; // Maximum number of Pokémon to fetch
+
+pokemonRepository.loadList(offset).then(function () {
   /* Loop to add Pokémon to the list */
   pokemonRepository.getAll().forEach(function (pokemon) {
     pokemonRepository.addListItem(pokemon);
   });
+});
+
+/* Infinite scroll implementation */
+var scrollDebounce = true; // Debounce to prevent multiple scroll events
+window.addEventListener('scroll', () => {
+  /* Check if the user has scrolled to the bottom of the page, 
+  if debounce is true and if the maximum set pokemon number is reached */
+  if (
+    window.innerHeight + window.scrollY >= document.body.offsetHeight - 50 &&
+    scrollDebounce &&
+    offset < maxPokemons
+  ) {
+    scrollDebounce = false; // Debounce to prevent multiple scroll events
+    offset += 18; // Update offset
+    pokemonRepository.loadList(offset).then(function () {
+      pokemonRepository
+        .getAll()
+        .slice(offset)
+        .forEach(function (pokemon) {
+          pokemonRepository.addListItem(pokemon);
+        });
+    });
+    setTimeout(function () {
+      scrollDebounce = true;
+    }, 500); // Debounce to prevent multiple scroll events
+  }
 });
