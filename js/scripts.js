@@ -295,31 +295,47 @@ pokemonRepository.loadList(offset).then(function () {
   });
 });
 
+let scrollDebounce = true; // Debounce to prevent multiple scroll events
+const loadMoreButton = document.querySelector('#loadMore'); // Load more button
+
+/* Function to load more Pokémon */
+function loadMore() {
+  let totalItems = document.querySelectorAll('.pokelist__item').length;
+  if (totalItems >= maxPokemons) {
+    loadMoreButton.classList.add('d-none');
+  }
+
+  scrollDebounce = false; // Debounce to prevent multiple scroll events
+  offset += 18; // Update offset
+  pokemonRepository.loadList(offset).then(function () {
+    pokemonRepository
+      .getAll()
+      .slice(offset)
+      .forEach(function (pokemon) {
+        pokemonRepository.addListItem(pokemon);
+      });
+  });
+  setTimeout(function () {
+    scrollDebounce = true;
+  }, 500); // Debounce to prevent multiple scroll events
+}
+
 /* Infinite scroll implementation */
-var scrollDebounce = true; // Debounce to prevent multiple scroll events
 window.addEventListener('scroll', () => {
   /* Check if the user has scrolled to the bottom of the page, 
   if debounce is true and if the maximum set pokemon number is reached */
   if (
-    window.innerHeight + window.scrollY >= document.body.offsetHeight - 50 &&
+    window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 &&
     scrollDebounce &&
     offset < maxPokemons
   ) {
-    scrollDebounce = false; // Debounce to prevent multiple scroll events
-    offset += 18; // Update offset
-    pokemonRepository.loadList(offset).then(function () {
-      pokemonRepository
-        .getAll()
-        .slice(offset)
-        .forEach(function (pokemon) {
-          pokemonRepository.addListItem(pokemon);
-        });
-    });
-    setTimeout(function () {
-      scrollDebounce = true;
-    }, 500); // Debounce to prevent multiple scroll events
+    loadMore();
   }
 });
+loadMoreButton.addEventListener('click', function () {
+  loadMore();
+});
+
 const currentYear = new Date().getFullYear();
 let currentYearWrapper = document.querySelector('.current_year');
 currentYearWrapper.innerText = currentYear;
