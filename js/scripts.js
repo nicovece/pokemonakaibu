@@ -320,3 +320,6 @@ window.addEventListener('scroll', () => {
     }, 500); // Debounce to prevent multiple scroll events
   }
 });
+const currentYear = new Date().getFullYear();
+let currentYearWrapper = document.querySelector('.current_year');
+currentYearWrapper.innerText = currentYear;
