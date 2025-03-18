@@ -2,6 +2,7 @@
 let pokemonRepository = (function () {
   /* Array to store Pokémon */
   let pokemonList = [];
+  let pokemonListFull = [];
   let apiUrl = 'https://pokeapi.co/api/v2/pokemon/';
   let limit = 18; // Reduced limit for better infinite scroll experience
 
@@ -9,6 +10,26 @@ let pokemonRepository = (function () {
   function getAll() {
     return pokemonList;
   }
+
+  function filterPokemon() {
+    let searchInput = document.querySelector('#searchInput');
+    let searchValue = searchInput.value.toLowerCase();
+    let pokemons = document.querySelectorAll('.pokelist__item');
+    pokemons.forEach(function (pokemon) {
+      if (
+        pokemon.getAttribute('data-name').toLowerCase().indexOf(searchValue) >
+        -1
+      ) {
+        pokemon.classList.remove('d-none');
+      } else {
+        pokemon.classList.add('d-none');
+      }
+    });
+  }
+
+  searchInput.addEventListener('input', function () {
+    filterPokemon();
+  });
 
   /* Function to add Pokémon to the array */
   function add(pokemon) {
@@ -57,7 +78,7 @@ let pokemonRepository = (function () {
 
     /* Pokémon name */
     let pokelistName = document.createElement('span');
-    pokelistName.innerText = pokemon.name + ' ' + pokemonId;
+    pokelistName.innerText = pokemon.name;
     pokelistName.classList.add('pokelist__name');
     button.appendChild(pokelistName);
     button.classList.add(
@@ -74,6 +95,7 @@ let pokemonRepository = (function () {
     /* Event listener to show Pokémon details */
     button.addEventListener('click', function () {
       showDetails(pokemon);
+      console.log(pokemon);
     });
     return button;
   }
@@ -93,8 +115,10 @@ let pokemonRepository = (function () {
       'p-3',
       'm-0',
       'd-grid',
-      'bg-transparent'
+      'bg-transparent',
+      pokemon.name
     );
+    listItem.setAttribute('data-name', pokemon.name);
     pokemonList.appendChild(listItem);
     /* Append button to list item */
     listItem.appendChild(createButton(pokemon));
